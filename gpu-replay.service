@@ -1,0 +1,10 @@
+[Unit]
+Description=Start the replay service (GPU Screen Recorder)
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/gpu-replay start
+ExecStop=/usr/local/bin/gpu-replay stop
+
+[Install]
+WantedBy=default.target
