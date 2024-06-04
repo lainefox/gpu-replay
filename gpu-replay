@@ -1,0 +1,18 @@
+#!/bin/bash
+
+audio_source="$(pactl get-default-sink).monitor"
+format="mkv"
+framerate=60
+path="$HOME/videos/captures"
+time=60
+
+mkdir -p "$path"
+if [[ "$1" == "start" ]]; then
+	gpu-screen-recorder -w screen -f $framerate -a "$audio_source" -c mkv -r $time -o "$path"
+elif [[ "$1" == "stop" ]]; then
+	killall -SIGINT gpu-screen-recorder
+elif [[ "$1" == "save" ]]; then
+	killall -SIGUSR1 gpu-screen-recorder && sleep 0.5 && notify-send -t 1500 -u low -- "GPU Replay" "Replay saved in $path"
+else
+	echo "Usage: $0 [start|stop]"
+fi
